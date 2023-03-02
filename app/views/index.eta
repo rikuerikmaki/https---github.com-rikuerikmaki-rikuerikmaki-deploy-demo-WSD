@@ -12,17 +12,13 @@
 
 <ul>
 <% it.addresses.forEach((address) => { %>
-    <li>
-        <%= address.name %>, <%= address.address %>
-        <form method="POST" action="/delete/<%= address.id %>">
-            <input type="submit" value="Delete" />
-        </form>
-    </li>
+  <li>
+    <%= address.name %>, <%= address.address %>
+    <form method="POST" action="/delete/<%= address.id %>">
+      <input type="submit" value="Delete" />
+    </form>
+  </li>
 <% }); %>
 </ul>
 
-<ul>
-<% it.addresses.forEach((address) => { %>
-  <li><%= address.name %>, <%= address.address %></li>
-<% }); %>
-</ul>
+<h2>Total addresses: <%= it.counts %></h2>

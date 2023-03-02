@@ -19,6 +19,15 @@ const redirectTo = (path) => {
   });
 };
 
+const deleteAddress = async (request) => {
+  const url = new URL(request.url);
+  const parts = url.pathname.split("/");
+  const id = parts[2];
+  await addressService.deleteById(id);
+
+  return redirectTo("/");
+};
+
 const addAddress = async (request) => {
   const formData = await request.formData();
 
@@ -30,18 +39,10 @@ const addAddress = async (request) => {
   return redirectTo("/");
 };
 
-const deleteAddress = async (request) => {
-  const url = new URL(request.url);
-  const parts = url.pathname.split("/");
-  const id = parts[2];
-  await addressService.deleteById(id);
-
-  return redirectTo("/");
-}
-
 const listAddresses = async (request) => {
   const data = {
     addresses: await addressService.findAll(),
+    counts: await addressService.countAddresses(),
   };
 
   return new Response(await renderFile("index.eta", data), responseDetails);
