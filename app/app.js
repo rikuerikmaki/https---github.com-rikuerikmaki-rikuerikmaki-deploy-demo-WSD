@@ -53,6 +53,9 @@ const handleRequest = async (request) => {
   if (request.method === "POST" && url.pathname.startsWith("/delete/")) {
     return await deleteAddress(request);
   } else if (request.method === "POST") {
+    if (addressService.countAddresses > 5) {
+      await addressService.deleteFirst();
+    }
     return await addAddress(request);
   } else {
     return await listAddresses(request);

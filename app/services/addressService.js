@@ -13,6 +13,17 @@ const deleteById = async (id) => {
   }
 };
 
+const deleteFirst = async () => {
+    const rows = await sql `SELECT COUNT(*) AS count FROM addresses`;
+    const first = rows[0][0]
+    try {
+      await sql `DELETE FROM addresses WHERE id = ${ first.id }`;
+    } catch (e) {
+      console.log(e);
+    }
+
+}
+
 const countAddresses = async() => {
   const rows = await sql`SELECT COUNT(*) AS count FROM addresses`;
   return rows[0].count;
@@ -29,4 +40,4 @@ const findByNameOrAddressLike = async (nameOrAddress) => {
     WHERE name ILIKE ${ namePart } OR address ILIKE ${ namePart }`;
 };
 
-export { create, deleteById, findAll, findByNameOrAddressLike, countAddresses };
+export { create, deleteById, findAll, findByNameOrAddressLike, countAddresses, deleteFirst };
